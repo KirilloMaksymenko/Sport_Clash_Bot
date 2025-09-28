@@ -1,0 +1,20 @@
+# Основні залежності для Telegram Fitness Bot
+aiogram==3.4.1
+aiohttp==3.9.1
+aiosqlite==0.19.0
+
+# GPS та геолокація
+geopy==2.4.1
+
+# Веб-сервер для Mini App
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Утиліти
+python-dotenv==1.0.0
+pydantic==2.5.2
+loguru==0.7.2
+
+# Тестування
+pytest==7.4.3
+pytest-asyncio==0.21.1

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Competition</title>
+
+    <!-- Telegram Mini App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Навігаційне меню -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="home">🏠 Головна</button>
+            <button class="tab-btn" data-tab="map">🗺️ Карта</button>
+            <button class="tab-btn" data-tab="competitions">🏆 Змагання</button>
+            <button class="tab-btn" data-tab="rankings">📊 Рейтинг</button>
+        </nav>
+
+        <!-- Головна вкладка -->
+        <div id="home" class="tab-content active">
+            <div class="stats-card">
+                <h2>📊 Твоя статистика</h2>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-distance">0 км</div>
+                        <div class="stat-label">Всього пройдено</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-steps">0</div>
+                        <div class="stat-label">Кроків сьогодні</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="current-rank">🥉</div>
+                        <div class="stat-label">Поточний рівень</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-points">0</div>
+                        <div class="stat-label">Очки</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button id="start-tracking" class="action-btn primary">
+                    🎯 Почати відстеження
+                </button>
+                <button id="stop-tracking" class="action-btn secondary" disabled>
+                    ⏹️ Зупинити відстеження
+                </button>
+            </div>
+        </div>
+
+        <!-- Вкладка карти -->
+        <div id="map" class="tab-content">
+            <div class="map-controls">
+                <button id="center-location" class="map-btn">📍 Моя позиція</button>
+                <button id="show-route" class="map-btn">🛣️ Маршрут</button>
+            </div>
+            <div id="leaflet-map"></div>
+            <div class="distance-info">
+                <span>Поточна швидкість: <strong id="current-speed">0 км/год</strong></span>
+                <span>Пройдено за сесію: <strong id="session-distance">0 км</strong></span>
+            </div>
+        </div>
+
+        <!-- Вкладка змагань -->
+        <div id="competitions" class="tab-content">
+            <h2>🏆 Доступні змагання</h2>
+
+            <div class="competition-types">
+                <div class="comp-card sprint">
+                    <div class="comp-icon">⚡</div>
+                    <div class="comp-info">
+                        <h3>Sprint забіг</h3>
+                        <p>Швидкий забіг з заданим маршрутом. Тривалість: 15-30 хв</p>
+                        <button class="join-btn" onclick="startCompetition('sprint')">
+                            Приєднатися
+                        </button>
+                    </div>
+                </div>
+
+                <div class="comp-card endurance">
+                    <div class="comp-icon">🏃‍♂️</div>
+                    <div class="comp-info">
+                        <h3>Endurance забіг</h3>
+                        <p>Забіг на витривалість. Тривалість: 1-2 години</p>
+                        <button class="join-btn" onclick="startCompetition('endurance')">
+                            Приєднатися
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="active-competition" class="competition-status" style="display:none;">
+                <h3>🔥 Активне змагання</h3>
+                <div class="competition-info">
+                    <p>Тип: <span id="comp-type"></span></p>
+                    <p>Час до завершення: <span id="comp-timer"></span></p>
+                    <p>Позиція: <span id="comp-position"></span></p>
+                </div>
+                <button id="finish-competition" class="action-btn">Завершити</button>
+            </div>
+        </div>
+
+        <!-- Вкладка рейтингу -->
+        <div id="rankings" class="tab-content">
+            <h2>📊 Рейтинг гравців</h2>
+
+            <div class="rank-filter">
+                <button class="filter-btn active" data-filter="group">🏘️ Моя група</button>
+                <button class="filter-btn" data-filter="global">🌍 Глобальний</button>
+            </div>
+
+            <div id="leaderboard" class="leaderboard">
+                <!-- Список лідерів буде заповнений JavaScript -->
+            </div>
+
+            <div class="my-rank">
+                <div class="rank-info">
+                    <span class="rank-position">#42</span>
+                    <span class="rank-name">Ви</span>
+                    <span class="rank-points">248 очок</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>
